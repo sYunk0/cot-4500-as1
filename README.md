@@ -1,21 +1,22 @@
-# cot-4500-intro
+# cot-4500-AS1
  
-This project is to help become more familiar with github and python.
+This project is to apply concepts learned in class.
 
 ## Files
-intro_to_python.py prints out three numpy matrices.
+assignment_1.py prints out the error of rounding and chopping a number as well as the number of itterations it took to converge with three different root finding methods.
 __init__.py does nothing
-The files in the src/test directory are direct copies of the files in main
 
 ## Running
-To run intro_to_python.py use:
+To run assignment_1.py use:
 ```bash
-    python src\main\intro_to_python.py
+    python src\main\assignment_1.py
 ```
 
 ## Requirements
-Requirements to run this project are listed in the requirements.txt
-* The only requirement is numpy
+Python is the only requirement to run this program.
+No other external libraries are required.
+Requirements.txt is empty.
+
 
 
 ## License

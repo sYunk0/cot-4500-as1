@@ -1,4 +1,4 @@
-import numpy as np
+#Author: Samuel Yunker
 
 def absoluteError(x,x_aprox):
     return abs(x-x_aprox)
@@ -10,10 +10,10 @@ def relativeError(x,x_aprox):
         return absoluteError(x,x_aprox)/abs(x)
 
 def question_1_through_4():
-    #number = 0b001110000000001111111111 #Zeros need to be padded behind the number to make it fit in any meaningful way
-    number = 3.14703e-5 # As retrieved from the assignment 1 pdf and converted into a floating point number and limited to 5 decimal places
-    number_ChoppedAt3Digits = 3.14e-5
-    number_RoundedTo3Digits = 3.15e-5
+    #number = 0b01000000 01111110 10111001 00000000 00000000 00000000 00000000 00000000 #Zeros needed to be padded behind the number to make it fit in any meaningful way
+    number = 491.5625 # As retrieved from the assignment 1 pdf and converted into a floating point number
+    number_ChoppedAt3Digits = 491.0000
+    number_RoundedTo3Digits = 492.0000
 
     relativeErrorOfRoundedNumber = relativeError(number,number_RoundedTo3Digits)
     absoluteErrorOfRoundedNumber = absoluteError(number,number_RoundedTo3Digits)
@@ -33,7 +33,8 @@ def question_5():
     
     minError = 1e-4
     currentItteration =  1
-    while(series(1,currentItteration) < minError):
+    while(abs(series(1,currentItteration)) > minError):
+        #print(series(1,currentItteration))
         currentItteration += 1
 
     print()
@@ -58,6 +59,8 @@ def BisectionRootFinder_itterationCounter(a,b,minError,f:callable):
             right = p
         else:
             left = p
+
+        #print(currentItterations,p)
     
 
     return currentItterations
@@ -67,29 +70,42 @@ def NewtonRaphsonMethod(initialGuess,minError,f,f_prime):
     currentItterations = 0
 
     x_prev = initialGuess
+    x_next = x_prev
+    while(currentItterations < maxItterations):
+        if(f_prime(x_prev) != 0):
 
-    currentEstimate = f(x_prev)
-    while(abs(currentEstimate) > minError and currentItterations < maxItterations):
-        currentItterations += 1
+            x_next = x_prev - f(x_prev)/f_prime(x_prev)
 
-
-        tangent = f_prime()
-
-        if(tangent != 0):
-            x_new = x_prev - currentEstimate/tangent
-
+            if(abs(x_prev - x_next) < minError):
+                return currentItterations
             
+            x_prev = x_next
+            currentItterations += 1
+        else:
+            return -1
+    return -2
 
 def question_6():
     def f(x):
         return x**3 + 4*(x**2) - 10
+    def f_prime(x):
+        return 3*(x**2) + 8*x
 
     minError = 1e-4
+    a = -4
+    b = 7
 
-    itterationsToConverge_Bisection = BisectionRootFinder_itterationCounter(4,7,minError,f)
+    itterationsToConverge_Bisection = BisectionRootFinder_itterationCounter(a,b,minError,f)
+    itterationsToConverge_Newton = NewtonRaphsonMethod(a,minError,f,f_prime)
+
+    print(itterationsToConverge_Bisection)
+    print()
+    print(itterationsToConverge_Newton)
     
 
 
 if __name__ == "__main__":
     question_1_through_4()
     question_5()
+    print()
+    question_6()
